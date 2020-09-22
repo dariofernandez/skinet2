@@ -22,9 +22,26 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             // see ProductConfiguration.cs where
             //   ProductConfiguration inherits from IEntityTypeConfiguration
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqllite")  // SqlServer
+            {
+                foreach(var entityType in modelBuilder.Model.GetEntityTypes())
+                {
+                    var properties = entityType.ClrType.GetProperties()
+                        .Where(p => p.PropertyType == typeof(decimal));
+
+                    foreach(var property in properties)
+                    {
+                        modelBuilder.Entity(entityType.Name)
+                            .Property(property.Name)
+                            .HasConversion<double>();
+                    }
+                }
+            }
         }
     }
 
