@@ -34,7 +34,12 @@ namespace API.Controllers
         public ActionResult GetServerError()
         {
             var thing = _context.Products.Find(42);
+            // we need not to catch this so it will cause an error
+            //if (thing != null)
+            //{
+            //}
             var thingToReturn = thing.ToString();
+
             return Ok();
         }
 
