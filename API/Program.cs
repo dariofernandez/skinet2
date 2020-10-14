@@ -1,14 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities.Identity;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
 
 namespace API
 {
@@ -26,11 +27,19 @@ namespace API
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var context = services.GetRequiredService<StoreContext>();
-                    await context.Database.MigrateAsync();
+                    // ENABLE EITHER MIGRATION COMMENTED OUT BELOW
 
-                    // run seed async
-                    await StoreContextSeed.SeedAsync(context, loggerFactory);
+                    //// MIGRATION 1
+                    //var context = services.GetRequiredService<StoreContext>();
+                    //await context.Database.MigrateAsync();
+                    //await StoreContextSeed.SeedAsync(context, loggerFactory);
+
+                    //// MIGRATION 2
+                    //var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    //var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    //await identityContext.Database.MigrateAsync();
+                    //await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
+
                 }
                 catch (Exception ex)
                 {

@@ -1,47 +1,75 @@
+using System.IO;
 using API.Extensions;
 using API.Helpers;
 using API.Middleware;
 using AutoMapper;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using StackExchange.Redis;
 
 namespace API
 {
     public class Startup
     {
-        //DF
-        //public IConfiguration Configuration { get; }
         private readonly IConfiguration _config;
-
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration config)
         {
-            _config = configuration;
+            _config = config;
         }
 
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
-            //some content moved to ApplicationServicesExtensions class
-
-            services.AddAutoMapper(typeof(MappingProfiles));
-
-            services.AddControllers();
-
-            //DF
             // lifetime is scoped (for the request)
             services.AddDbContext<StoreContext>(x =>
             x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlServer(_config.GetConnectionString("IdentityConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            // lifetime is scoped (for the request)
+            services.AddDbContext<StoreContext>(x =>
+            x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlServer(_config.GetConnectionString("IdentityConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
+
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            //some content moved to ApplicationServicesExtensions class
+            services.AddAutoMapper(typeof(MappingProfiles));
+            services.AddControllers();
+
+            // section 13
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                var configuration = ConfigurationOptions.Parse(_config
+                    .GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
             services.AddApplicationServices();
-
+            services.AddIdentityServices(_config);
             services.AddSwaggerDocumentation();
-
-            // allow cross origins
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -54,12 +82,12 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             // exceptions in Development Mode
             //if (env.IsDevelopment())
             //{
             //    app.UseDeveloperExceptionPage();
             //}
+
             app.UseMiddleware<ExceptionMiddleware>();
 
             //by DF 51. for error handling
@@ -69,20 +97,26 @@ namespace API
 
             app.UseRouting();
 
-            //DF
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Content")h 
+                ),
+                RequestPath = "/content"
+            });
 
-            //DF
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();  // see IdentityServiceExtensions.cs
             app.UseAuthorization();
 
-            // see extensions
             app.UseSwaggerDocumentation();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
