@@ -11,14 +11,10 @@ import { AccountService } from 'src/app/account/account.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
   basket$: Observable<IBasket>;
-
   currentUser$: Observable<IUser>;
 
-  private accountService: AccountService;
-
-  constructor(private basketService: BasketService ) { }
+  constructor(private basketService: BasketService, private accountService: AccountService) { }
 
   ngOnInit() {
     this.basket$ = this.basketService.basket$;

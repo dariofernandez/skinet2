@@ -101,7 +101,7 @@ namespace API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Content")h 
+                    Path.Combine(Directory.GetCurrentDirectory(), "Content") 
                 ),
                 RequestPath = "/content"
             });

@@ -2,6 +2,7 @@
 {
     public class Address
     {
+        // empty constructor needed for migrations
         public Address()
         {
         }

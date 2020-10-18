@@ -21,7 +21,7 @@ export interface IBasketItem {
 
 export class Basket implements IBasket {
     id = uuid();
-    items: IBasketItem[] = [];  //initialize so we don't get an error
+    items: IBasketItem[] = [];  // initialize so we don't get an error
 }
 
 export interface IBasketTotals {

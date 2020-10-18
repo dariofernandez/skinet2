@@ -8,6 +8,8 @@ namespace API.Helpers
     public class OrderItemUrlResolver : IValueResolver<OrderItem, OrderItemDto, string>
     {
         private readonly IConfiguration _config;
+
+        // inject the configuration to bring in the 'ApiUrl' setting
         public OrderItemUrlResolver(IConfiguration config)
         {
             _config = config;

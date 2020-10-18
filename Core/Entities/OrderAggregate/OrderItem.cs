@@ -2,6 +2,8 @@
 {
     public class OrderItem : BaseEntity
     {
+
+        // empty constructor needed for EF migrations
         public OrderItem()
         {
         }

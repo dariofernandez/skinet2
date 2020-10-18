@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
 import { IAddress } from '../shared/models/address';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  // make a service a singleton
 })
 
 export class AccountService {
+
   baseUrl = environment.apiUrl;
 
   // ReplaySubject does not emit an initial value
@@ -79,6 +80,7 @@ export class AccountService {
     return this.http.get(this.baseUrl + 'account/emailexists?email=' + email);
   }
 
+  // needed for verifying the address when checking-out
   getUserAddress() {
     return this.http.get<IAddress>(this.baseUrl + 'account/address');
   }

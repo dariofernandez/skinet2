@@ -29,7 +29,7 @@ namespace API
                 {
                     // ENABLE EITHER MIGRATION COMMENTED OUT BELOW
 
-                    //// MIGRATION 1
+                    //// MIGRATION 1  (see my notes page 16)
                     //var context = services.GetRequiredService<StoreContext>();
                     //await context.Database.MigrateAsync();
                     //await StoreContextSeed.SeedAsync(context, loggerFactory);

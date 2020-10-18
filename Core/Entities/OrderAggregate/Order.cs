@@ -7,6 +7,7 @@ namespace Core.Entities.OrderAggregate
     {
         public Order()
         {
+            // empty constructor needed for EF migrations
         }
 
         public Order(IReadOnlyList<OrderItem> orderItems, string buyerEmail, Address shipToAddress, DeliveryMethod deliveryMethod, decimal subtotal, string paymentIntentId)

@@ -9,7 +9,8 @@ namespace Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly StoreContext _context;
-        private Hashtable _repositories;
+        private Hashtable _repositories;  // repositories are stored here
+
         public UnitOfWork(StoreContext context)
         {
             _context = context;
@@ -27,14 +28,19 @@ namespace Infrastructure.Data
 
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity
         {
+            // initialize
             if (_repositories == null) _repositories = new Hashtable();
 
             var type = typeof(TEntity).Name;
 
+            // if the repository does not already have that type, add
             if (!_repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(GenericRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
+
+                // get the instance to store
+                var repositoryInstance = Activator.CreateInstance(
+                    repositoryType.MakeGenericType(typeof(TEntity)), _context);
 
                 _repositories.Add(type, repositoryInstance);
             }
@@ -43,3 +49,4 @@ namespace Infrastructure.Data
         }
     }
 }
+

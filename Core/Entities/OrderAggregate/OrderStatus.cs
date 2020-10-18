@@ -4,6 +4,7 @@ namespace Core.Entities.OrderAggregate
 {
     public enum OrderStatus
     {
+        // Value is an attribute to retrieve the text
         [EnumMember(Value = "Pending")]
         Pending,
 

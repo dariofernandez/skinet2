@@ -10,10 +10,12 @@ import { IDeliveryMethod } from '../shared/models/deliveryMethod';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BasketService {
 
   baseUrl = environment.apiUrl;
   private basketSource = new BehaviorSubject<IBasket>(null);
+
   // public var for other subscribers
   basket$ = this.basketSource.asObservable();
 
@@ -39,10 +41,12 @@ export class BasketService {
     this.shipping = deliveryMethod.price;
     const basket = this.getCurrentBasketValue();
     basket.deliveryMethodId = deliveryMethod.id;
+    // set the shipping price in the basket to persist
     basket.shippingPrice = deliveryMethod.price;
     this.calculateTotals();
     this.setBasket(basket);
   }
+
 
   getBasket(id: string) {
     return this.http.get(this.baseUrl + 'basket?id=' + id)
@@ -51,6 +55,7 @@ export class BasketService {
           this.basketSource.next(basket);
           console.log(this.getCurrentBasketValue());
           
+          // bring in the shipping price
           this.shipping = basket.shippingPrice;
           this.calculateTotals();
         })
@@ -124,6 +129,7 @@ export class BasketService {
   }
 
 
+  // delete from the redis
   deleteLocalBasket(id: string) {
     this.basketSource.next(null);
     this.basketTotalSource.next(null);

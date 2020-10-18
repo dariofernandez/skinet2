@@ -15,12 +15,14 @@ namespace API.Helpers
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
 
+            // get the address from identity
             CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();
 
             CreateMap<BasketItemDto, BasketItem>();
 
+            // get the address from OrderAggregate
             CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>();
 
             CreateMap<Order, OrderToReturnDto>()
