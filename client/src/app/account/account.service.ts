@@ -24,7 +24,6 @@ export class AccountService {
     private router: Router) { }
 
   
-    
   loadCurrentUser(token: string) {
 
     if (token === null) {

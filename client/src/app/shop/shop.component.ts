@@ -15,7 +15,7 @@ import { ShopParams } from '../shared/models/shopParams';
 })
 export class ShopComponent implements OnInit {
 
-  //static property to use for #search tab in shop.component.html
+  // static property to use for #search tab in shop.component.html
   @ViewChild('search', {static: false}) searchTerm: ElementRef;
 
   products: IProduct[];

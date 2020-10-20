@@ -9,7 +9,6 @@ using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 
-
 namespace Infrastructure.Data
 {
     public class StoreContextSeed
@@ -18,28 +17,27 @@ namespace Infrastructure.Data
         {
             try
             {
-                // bring in using System.Linq;
+                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
                 if (!context.ProductBrands.Any())
                 {
-                    // running from Programs.cs class
-                    var brandsData = 
-                        File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
+                    var brandsData =
+                        File.ReadAllText(path + @"/Data/SeedData/brands.json");
 
                     var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
 
-                    foreach(var item in brands)
+                    foreach (var item in brands)
                     {
                         context.ProductBrands.Add(item);
                     }
+
                     await context.SaveChangesAsync();
                 }
 
-
                 if (!context.ProductTypes.Any())
                 {
-                    // running from Programs.cs class
                     var typesData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
+                        File.ReadAllText(path + @"/Data/SeedData/types.json");
 
                     var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
 
@@ -47,14 +45,14 @@ namespace Infrastructure.Data
                     {
                         context.ProductTypes.Add(item);
                     }
+
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.Products.Any())
                 {
-                    // running from Programs.cs class
                     var productsData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
+                        File.ReadAllText(path + @"/Data/SeedData/products.json");
 
                     var products = JsonSerializer.Deserialize<List<Product>>(productsData);
 
@@ -62,14 +60,14 @@ namespace Infrastructure.Data
                     {
                         context.Products.Add(item);
                     }
+
                     await context.SaveChangesAsync();
                 }
-
 
                 if (!context.DeliveryMethods.Any())
                 {
                     var dmData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                        File.ReadAllText(path + @"/Data/SeedData/delivery.json");
 
                     var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
 
@@ -80,14 +78,9 @@ namespace Infrastructure.Data
 
                     await context.SaveChangesAsync();
                 }
-
             }
             catch (Exception ex)
             {
-                // NOTE:  Set identity_insert on to be able to explicitly set the value of the id column. Set it off again to auto-assign.
-                // Need to turn identity to off for each table that already has the Id specified in the JSON file
-                //   ie.  ProductTypes, ProductBrands, DeliveryMethod
-
                 var logger = loggerFactory.CreateLogger<StoreContextSeed>();
                 logger.LogError(ex.Message);
             }

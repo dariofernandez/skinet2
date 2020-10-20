@@ -1,4 +1,7 @@
-import uuid from 'uuid/dist/v4';
+// 146.   import uuid from 'uuid/dist/v4';
+//        npm install @types/uuid
+
+import {v4 as uuidv4} from 'uuid';
 
 export interface IBasket {
     id: string;
@@ -20,7 +23,8 @@ export interface IBasketItem {
 }
 
 export class Basket implements IBasket {
-    id = uuid();
+    // id = uuid();
+    id = uuidv4();
     items: IBasketItem[] = [];  // initialize so we don't get an error
 }
 

@@ -15,6 +15,9 @@ appsettings.json
 obj
 bin
 *.db
+*.rdb
+publish
+wwwroot
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

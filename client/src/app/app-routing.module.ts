@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
@@ -14,22 +15,28 @@ const routes: Routes = [
   { path: 'server-error', component: ServerErrorComponent, data: { breadcrumb: 'Server Error' } },
   { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
   
-  // lazy loading only when shop is activated,we load the shop.moodule
+  // lazy loading only when shop is activated,we load the shop.module
   {path: 'shop', 
     loadChildren: () => import('./shop/shop.module')
     .then(mod => mod.ShopModule), data: {breadcrumb: 'Shop'}},
 
-  // lazy loading only when basket is activated,we load the shop.moodule
+  // lazy loading only when basket is activated,we load the basket.module
   {path: 'basket', 
     loadChildren: () => import('./basket/basket.module')
     .then(mod => mod.BasketModule), data: {breadcrumb: 'Basket'}},
 
-  // lazy loading only when checkout is activated,we load the shop.moodule
+  // lazy loading only when checkout is activated,we load the module
   {path: 'checkout', 
     loadChildren: () => import('./checkout/checkout.module')
     .then(mod => mod.CheckoutModule), data: {breadcrumb: 'Checkout'}},
-    
-  // lazy loading only when account is activated,we load the shop.moodule
+
+  {
+    path: 'orders',
+     loadChildren: () => import('./orders/orders.module')
+      .then(mod => mod.OrdersModule), data: { breadcrumb: 'Orders' }
+  },  
+
+  // lazy loading only when account is activated,we load the module
   {path: 'account', 
     loadChildren: () => import('./account/account.module')
     .then(mod => mod.AccountModule), data: {breadcrumb: {skip: true}}},

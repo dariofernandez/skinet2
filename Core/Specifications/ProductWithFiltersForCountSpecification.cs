@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Core.Specifications
 {
-    public class ProductsWithFiltersForCountSpecification : BaseSpecification<Product>
+    public class ProductWithFiltersForCountSpecification : BaseSpecification<Product>
     {
-        public ProductsWithFiltersForCountSpecification(
+        public ProductWithFiltersForCountSpecification(
             ProductSpecParams productParams)
             : base(x =>
               (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&

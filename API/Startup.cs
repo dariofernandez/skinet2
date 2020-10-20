@@ -23,7 +23,7 @@ namespace API
             _config = config;
         }
 
-        public void ConfigureDevelopmentServices(IServiceCollection services)
+        public void ConfigureDevelopmentServices(IServiceCollection services)  // convention based 
         {
             // lifetime is scoped (for the request)
             services.AddDbContext<StoreContext>(x =>
@@ -38,7 +38,7 @@ namespace API
         }
 
 
-        public void ConfigureProductionServices(IServiceCollection services)
+        public void ConfigureProductionServices(IServiceCollection services)  // convention based
         {
             // lifetime is scoped (for the request)
             services.AddDbContext<StoreContext>(x =>
@@ -98,6 +98,8 @@ namespace API
             app.UseRouting();
 
             app.UseStaticFiles();
+
+            // this is for getting the images from the Contenet folder
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -116,7 +118,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapFallbackToController("Index", "Fallback");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
