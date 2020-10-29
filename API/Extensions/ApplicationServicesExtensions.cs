@@ -25,6 +25,7 @@ namespace API.Extensions
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
+                    // extract the errors and populate the errors variable
                     var errors = actionContext.ModelState
                         .Where(e => e.Value.Errors.Count > 0)
                         .SelectMany(x => x.Value.Errors)

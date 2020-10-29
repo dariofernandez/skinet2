@@ -1,0 +1,94 @@
+========================= Create Publish folder in API folder ============================
+In VS2019, Tools, Command Line, Developer Command Prompt
+
+SET ASPNETCORE_ENVIRONMENT=Production
+
+in skinet2 folder, do:
+dotnet ef migrations add "SQL Initial" -p Infrastructure  -s API  -c StoreContext -o Data/Migrations
+dotnet ef migrations add "SQL Identity Initial" -p Infrastructure  -s API  -c AppIdentityDbContext  -o Identity/Migrations
+
+cd client
+ng build --prod
+
+cd api
+dotnet run
+
+-- create a published version of the .Net applocation in API/Publish  (including content and wwwroot folders)
+--   see section 296. Pre deployment work 
+cd skinet2
+dotnet publish -c Release -o publish skinet2.sln
+
+now is http://localhost:5101/Content/images/products/boot-ang2.png
+https://localhost:5101/Content/images/products/boot-ang2.png
+http://localhost:5100/Content/images/products/boot-ang2.png
+==========================  MySQL database (local) =============================================
+Install MySql at port: 3306, root pwd=Betfer123$   (MySql installer for windows)
+> mysql -u root -p Betfer123$
+> show databases;
+> create user 'appuser'@'localhost' identified by 'Pa$$w0rd'
+> GRANT ALL PRIVILEGES ON *.* TO 'appuser'@'localhost' WITH GRANT OPTIONS;
+> FLUSH PRIVILEGES
+
+
+
+========================== Create MySQL Publisher folder ======================================
+
+-- make changes to appsettings.json
+-- make changes to Startup.cs, ConfigureProductionServices
+-- remove Migrations folders in VS2019
+
+In VS2019, Tools, Command Line, Developer Command Prompt:
+
+SET ASPNETCORE_ENVIRONMENT=Production
+cd client
+
+
+cd skinet2
+dotnet ef migrations add "MySQL Initial" -p Infrastructure  -s API  -c StoreContext -o Data/Migrations
+dotnet ef migrations add "MySQL Identity Initial" -p Infrastructure  -s API  -c AppIdentityDbContext  -o Identity/Migrations
+
+cd api
+-- Create databases in MySql
+donet run
+  INSERT INTO ProductBrands (Id, Name) VALUES (1, 'Angular');
+  INSERT INTO ProductBrands (Id, Name) VALUES (2, 'NetCore');
+  INSERT INTO ProductBrands (Id, Name) VALUES (3, 'VS Cod');
+  INSERT INTO ProductBrands (Id, Name) VALUES (4, 'React');
+  INSERT INTO ProductBrands (Id, Name) VALUES (5, 'Typescript');
+  INSERT INTO ProductBrands (Id, Name) VALUES (6, 'Redis');
+
+ INSERT INTO DeliveryMethods (Id, ShortName, Description,DeliveryTime,Price  ) VALUES (1, 'UPS1', 'Fastest delivery time', '1-2 Days', 10);
+  INSERT INTO DeliveryMethods (Id, ShortName, Description,DeliveryTime,Price  ) VALUES (2, 'UPS2', 'Get it within 5 days', '2-5 Days', 5);
+  INSERT INTO DeliveryMethods (Id, ShortName, Description,DeliveryTime,Price  ) VALUES (3, 'UPS3', 'Slower but cheap', '5-10 Days', 2);
+  INSERT INTO DeliveryMethods (Id, ShortName, Description,DeliveryTime,Price  ) VALUES (4, 'FREE', 'Free! You get what you pay for', '1-2 Weeks', 0);
+
+  INSERT INTO ProductTypes (Id, Name) VALUES (1, 'Boards');
+  INSERT INTO ProductTypes (Id, Name) VALUES (2, 'Hats');
+  INSERT INTO ProductTypes (Id, Name) VALUES (3, 'Boots');
+  INSERT INTO ProductTypes (Id, Name) VALUES (4, 'Gloves');
+
+for Products see Infrastructure, Data, SeedData, products.json
+
+
+
+=================================================== NOT NEEDED =====================================
+-- In MySQL add auto increment to OrderItems table:
+alter table orderitems modify Id int AUTO_INCREMENT;
+ALTER TABLE orderitems DROP FOREIGN KEY FK_OrderItems_Orders_OrderId, MODIFY OrderId int;
+alter table orders modify Id int AUTO_INCREMENT;
+ALTER TABLE orderitems ADD CONSTRAINT FK_OrderItems_Orders_OrderId FOREIGN KEY (OrderId) REFERENCES orders (Id);
+================================================ END OF NOT NEEDED =====================================
+
+
+
+Run VS2019 as administrator
+
+In VS2019 project, right click on API, Publish
+==========================================================================
+Azure Subscription New 
+
+Create new dbserver:  dariodbserver  dario pa$$w0rd
+
+Server=tcp:dariodbserver.database.windows.net,1433;Initial Catalog=DarioDB;Persist Security Info=False;User ID=dario;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+

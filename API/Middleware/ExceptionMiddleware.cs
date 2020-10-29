@@ -21,10 +21,11 @@ namespace API.Middleware
             ILogger<ExceptionMiddleware> logger,
             IHostEnvironment env)
         {
-            _env = env;
+            _env = env;  // to check if we're running in development mode
             _next = next;
             _logger = logger;
         }
+
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -41,7 +42,8 @@ namespace API.Middleware
                 var response = _env.IsDevelopment()
                     ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message,
                     ex.StackTrace.ToString())
-                    : new ApiException((int)HttpStatusCode.InternalServerError);
+                    : new ApiException((int)HttpStatusCode.InternalServerError, ex.Message,
+                    ex.StackTrace.ToString());
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 

@@ -27,18 +27,28 @@ namespace API
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
+                    //=============================================================================================================
+                    //in VSCode, Terminal, folder skinet2
+                    //    SET ASPNETCORE_ENVIRONMENT=Production
+                    //    dotnet ef migrations add "SQL Initial" -p Infrastructure -s API -c StoreContext -o Data/Migrations
+                    //    dotnet ef migrations add "SQL Identity Initial" -p Infrastructure -s API -c AppIdentityDbContext -o Identity/Migrations
+                    //    dotnet run
+                    //=============================================================================================================
+
+
+
                     // ENABLE EITHER MIGRATION COMMENTED OUT BELOW
 
-                    //// MIGRATION 1  (see my notes page 16)
-                    //var context = services.GetRequiredService<StoreContext>();
-                    //await context.Database.MigrateAsync();
-                    //await StoreContextSeed.SeedAsync(context, loggerFactory);
+                    ////// MIGRATION 1  (see my notes page 16)
+                    var context = services.GetRequiredService<StoreContext>();
+                    await context.Database.MigrateAsync();
+                    await StoreContextSeed.SeedAsync(context, loggerFactory);
 
-                    //// MIGRATION 2
-                    //var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                    //var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                    //await identityContext.Database.MigrateAsync();
-                    //await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
+                    ////// MIGRATION 2
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    await identityContext.Database.MigrateAsync();
+                    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 
                 }
                 catch (Exception ex)
@@ -56,6 +66,8 @@ namespace API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                     //   .UseUrls("http://localhost:5100");
+                            
                 });
     }
 }

@@ -1,0 +1,185 @@
+/*
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (1, N'Angular Speedster Board 2000', N'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.', CAST(200.00 AS Decimal(18, 2)), N'images/products/sb-ang1.png', 1, 1)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (2, N'Core Purple Boots', N'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.', CAST(199.99 AS Decimal(18, 2)), N'images/products/boot-core1.png', 3, 2)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (3, N'Core Red Boots', N'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.', CAST(189.99 AS Decimal(18, 2)), N'images/products/boot-core2.png', 3, 2)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (4, N'Redis Red Boots', N'Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.', CAST(250.00 AS Decimal(18, 2)), N'images/products/boot-redis1.png', 3, 6)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (5, N'Green React Gloves', N'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.', CAST(14.00 AS Decimal(18, 2)), N'images/products/glove-react2.png', 4, 4)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (6, N'Purple React Gloves', N'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.', CAST(16.00 AS Decimal(18, 2)), N'images/products/glove-react1.png', 4, 4)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (7, N'Green Code Gloves', N'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.', CAST(15.00 AS Decimal(18, 2)), N'images/products/glove-code2.png', 4, 3)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (8, N'Blue Code Gloves', N'Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.', CAST(18.00 AS Decimal(18, 2)), N'images/products/glove-code1.png', 4, 3)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (9, N'Purple React Woolen Hat', N'Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.', CAST(15.00 AS Decimal(18, 2)), N'images/products/hat-react2.png', 2, 4)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (10, N'Green React Woolen Hat', N'Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.', CAST(8.00 AS Decimal(18, 2)), N'images/products/hat-react1.png', 2, 4)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (11, N'Core Blue Hat', N'Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.', CAST(10.00 AS Decimal(18, 2)), N'images/products/hat-core1.png', 2, 2)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (12, N'Typescript Entry Board', N'Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.', CAST(120.00 AS Decimal(18, 2)), N'images/products/sb-ts1.png', 1, 5)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (13, N'React Board Super Whizzy Fast', N'Testing Null', CAST(250.00 AS Decimal(18, 2)), N'images/products/sb-react1.png', 1, 4)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (14, N'Net Core Super Board', N'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.', CAST(300.00 AS Decimal(18, 2)), N'images/products/sb-core2.png', 1, 2)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (15, N'Core Board Speed Rush 3', N'Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.', CAST(180.00 AS Decimal(18, 2)), N'images/products/sb-core1.png', 1, 2)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (16, N'Green Angular Board 3000', N'Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.', CAST(150.00 AS Decimal(18, 2)), N'images/products/sb-ang2.png', 1, 1)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (17, N'Angular Purple Boots', N'Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.', CAST(150.00 AS Decimal(18, 2)), N'images/products/boot-ang2.png', 3, 1)
+GO
+INSERT [dbo].[Products] ([Id], [Name], [Description], [Price], [PictureUrl], [ProductTypeId], [ProductBrandId]) VALUES (18, N'Angular Blue Boots', N'Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.', CAST(180.00 AS Decimal(18, 2)), N'images/products/boot-ang1.png', 3, 1)
+GO
+
+
+*/
+[
+  {
+    "Name": "Angular Speedster Board 2000",
+    "Description": "Lorem ipsus malesuada libero, sit amet commodo magna eros quis urna.",
+    "Price": 200,
+    "PictureUrl": "images/products/sb-ang1.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 1
+  },
+  {
+    "Name": "Green Angular Board 3000",
+    "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+    "Price": 150,
+    "PictureUrl": "images/products/sb-ang2.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 1
+  },
+  {
+    "Name": "Core Board Speed Rush 3",
+    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc.",
+    "Price": 180,
+    "PictureUrl": "images/products/sb-core1.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Net Core Super Board",
+    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+    "Price": 300,
+    "PictureUrl": "images/products/sb-core2.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "React Board Super Whizzy Fast",
+    "Price": 250,
+    "PictureUrl": "images/products/sb-react1.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Typescript Entry Board",
+    "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
+    "Price": 120,
+    "PictureUrl": "images/products/sb-ts1.png",
+    "ProductTypeId": 1,
+    "ProductBrandId": 5
+  },
+  {
+    "Name": "Core Blue Hat",
+    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+    "Price": 10,
+    "PictureUrl": "images/products/hat-core1.png",
+    "ProductTypeId": 2,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Green React Woolen Hat",
+    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+    "Price": 8,
+    "PictureUrl": "images/products/hat-react1.png",
+    "ProductTypeId": 2,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Purple React Woolen Hat",
+    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+    "Price": 15,
+    "PictureUrl": "images/products/hat-react2.png",
+    "ProductTypeId": 2,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Blue Code Gloves",
+    "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+    "Price": 18,
+    "PictureUrl": "images/products/glove-code1.png",
+    "ProductTypeId": 4,
+    "ProductBrandId": 3
+  },
+  {
+    "Name": "Green Code Gloves",
+    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+    "Price": 15,
+    "PictureUrl": "images/products/glove-code2.png",
+    "ProductTypeId": 4,
+    "ProductBrandId": 3
+  },
+  {
+    "Name": "Purple React Gloves",
+    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
+    "Price": 16,
+    "PictureUrl": "images/products/glove-react1.png",
+    "ProductTypeId": 4,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Green React Gloves",
+    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+    "Price": 14,
+    "PictureUrl": "images/products/glove-react2.png",
+    "ProductTypeId": 4,
+    "ProductBrandId": 4
+  },
+  {
+    "Name": "Redis Red Boots",
+    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+    "Price": 250,
+    "PictureUrl": "images/products/boot-redis1.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 6
+  },
+  {
+    "Name": "Core Red Boots",
+    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+    "Price": 189.99,
+    "PictureUrl": "images/products/boot-core2.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Core Purple Boots",
+    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+    "Price": 199.99,
+    "PictureUrl": "images/products/boot-core1.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 2
+  },
+  {
+    "Name": "Angular Purple Boots",
+    "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
+    "Price": 150,
+    "PictureUrl": "images/products/boot-ang2.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 1
+  },
+  {
+    "Name": "Angular Blue Boots",
+    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+    "Price": 180,
+    "PictureUrl": "images/products/boot-ang1.png",
+    "ProductTypeId": 3,
+    "ProductBrandId": 1
+  }
+]

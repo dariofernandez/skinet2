@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using Core.Entities;
@@ -27,6 +28,14 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT DeliveryMethods ON");
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT OrderItems ON");
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Orders ON");
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT ProductBrands ON");
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Products ON");
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT ProductTypes ON");
+            
+
             base.OnModelCreating(modelBuilder);
 
             // see ProductConfiguration.cs where
@@ -46,6 +55,8 @@ namespace Infrastructure.Data
                     foreach (var property in properties)
                     {
                         modelBuilder.Entity(entityType.Name).Property(property.Name).HasConversion<double>();
+
+                        
                     }
 
                     foreach (var property in dateTimeProperties)
@@ -59,14 +70,12 @@ namespace Infrastructure.Data
                 // for SQL Server 
                 foreach (var entityType in modelBuilder.Model.GetEntityTypes())
                 {
-                    var properties = entityType.ClrType.GetProperties().
-                        Where(p => p.PropertyType == typeof(decimal));
+                    var properties = entityType.ClrType.GetProperties().Where(p => p.PropertyType == typeof(decimal));
 
                     foreach (var property in properties)
                     {
                         modelBuilder.Entity(entityType.Name).Property(property.Name).HasConversion<double>();
                     }
-
                 }
             }
         }

@@ -1,16 +1,35 @@
+
+Digital ocean -> use the following to get $100 credit
+  http://bit.ly/do-tcl
+
+After providing credit card info, go inside Digital Ocean, select Marketplace, LAMP
+(comes with Apache, MySQL, PHP, Certbot)
+
+click on Create Lamp droplet, select Basic $5 (1G, 25G SSD, 1000 GB transfer)
+
+157.230.209.117
+
+=========================================================================
+
+
 *** LINUX SERVER SETUP USING A NEWLY CREATED DIGITAL OCEAN LAMP SERVER ***
 
-1. ssh root@ipaddressOfLinuxServer (follow instructions to change password)
+Start a command prompt (windows not the one in VS2019)
+
+1. ssh root@157.230.209.117 (follow instructions to change password)
+
+Betfer123As
 
 2. Set up mysql (password available from welcome message)
 
 cat /root/.digitalocean_password
 
-mysql -u root -p
+mysql -u root -p 6bec59f78c417cf91d535b450c815534af09531b5f713efb
 
 CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'Pa$$w0rd';
 GRANT ALL PRIVILEGES ON *.* TO 'appuser'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
+quit  (from MySql)
 
 3.  Install Redis on the server:
 
@@ -40,7 +59,15 @@ ping
 
 quit out of the redis cli
 
+-- Stop & Start Redis
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+
+
+
 4.  Install the dotnet runtime (follow instructions from here https://dotnet.microsoft.com/download/linux-package-manager/ubuntu18-04/runtime-current)
+
+(select Ubuntu 18.4)
 
 5.  Configure Apache
 
@@ -50,25 +77,29 @@ systemctl restart apache2
 
 6.  Configure the virtual host
 
-sudo nano /etc/apache2/sites-available/skinet.conf
+sudo nano /etc/apache2/sites-available/ecuanto.conf
 
 <VirtualHost *:80>
 ProxyPreserveHost On
-ProxyPass / http://127.0.0.1:5000/
-ProxyPassReverse / http://127.0.0.1:5000/
+ProxyPass / http://127.0.0.1:5100/
+ProxyPassReverse / http://127.0.0.1:5100/
+ServerName www.ecuanto.com
 
-ErrorLog /var/log/apache2/skinet-error.log
-CustomLog /var/log/apache2/skinet-access.log common
-
+ErrorLog /var/log/apache2/ecuanto-error.log
+CustomLog /var/log/apache2/ecuanto-access.log common
 </VirtualHost>
+
 
 6. Enable the site 
 
-a2ensite skinet
+a2ensite ecuanto
+
+(check enabled sites with:  ls /etc/apache2/sites-enabled/
 
 7.  Disable the default Apache site:
 
 a2dissite 000-default
+a2dissite nisqs
 
 Then restart apache
 
@@ -76,9 +107,12 @@ systemctl reload apache2
 
 8. Update the config in appsettings:
 
-Update the endpoints for the webhooks to point to the IP address of the new server https://LinuxIPAddress/api/payments/webhook
+In Stripe:
+Update the endpoints for the webhooks to point to the IP address of the new server 
+http://157.230.209.117/api/payments/webhook
 
 Copy the Webhook secret to the appsettings.json file
+whsec_gbdJSFQ5m4hZyYoP6gx0WvaW3nTKJ86n
 
 9.  Add the deploy.reloaded extension to VS Code
 
@@ -96,17 +130,16 @@ Copy the Webhook secret to the appsettings.json file
                 ]
             }
         ],
-
         "targets": [
             {
                 "type": "sftp",
                 "name": "Linux",
                 "description": "SFTP folder",
 
-                "host": "IP Address", "port": 22,
-                "user": "root", "password": "Your Linux password",
+                "host": "157.230.209.117", "port": 22,
+                "user": "root", "password": "Betfer123As",
 
-                "dir": "/var/skinet",
+                "dir": "/var/ecuanto",
                 "mappings": {
                     "publish/**": "/"
                 }
@@ -119,68 +152,91 @@ Copy the Webhook secret to the appsettings.json file
 
 Update the appsettings.json file and change the ApiUrl to match your server IP address e.g:
 
-"ApiUrl": "http://128.199.203.224/Content/",
+"ApiUrl": "http://157.230.209.117/Content/",
 
-dotnet publish -c Release -o publish Skinet.sln
+cd skinet2
+dotnet publish -c Release -o publish Skinet2.sln
 
 This will create a new folder called publish
 
-12.  Deploy the package using deploy reloaded
+
+Note: to remove a folder and its subdirectories in Linux (rm -r /var/ecuanto/ )
+
+
+12.  Deploy the package using deploy reloaded 
+(Ctrl Alt W in VSCode)
+
+
+check contents of published folder:
+ ls /var/ecuanto/
 
 === Back to the Linux server ====
 
-13.  Restart the journalctl service as this has been not working on fresh installs and is very useful to get information about the service:
+13.  Restart the journalctlq service as this has been not working on fresh installs and is very useful to get information about the service:
 
 systemctl restart systemd-journald
+journalctl
 
 14.  Set up the service that will run the kestrel web server
 
-sudo nano /etc/systemd/system/skinet-web.service
+
+sudo nano /etc/systemd/system/ecuanto-web.service
 
 Paste in the folllowing:
 
 [Unit]
 Description=Kestrel service running on Ubuntu 18.04
 [Service]
-WorkingDirectory=/var/skinet
-ExecStart=/usr/bin/dotnet /var/skinet/API.dll
+WorkingDirectory=/var/ecuanto
+ExecStart=/usr/bin/dotnet /var/ecuanto/API.dll
 Restart=always
 RestartSec=10
-SyslogIdentifier=skinet
+SyslogIdentifier=ecuanto
 User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
-Environment='Token__Key=CHANGE ME TO SOMETHING SECURE'
-Environment='Token__Issuer=https://yoursitegoeshere'
+Environment='Token__Key=super secret key'
+Environment='Token__Issuer=https://www.ecuanto.com'
+Environment='ApiUrl=http://ecuanto.com/Content/'
 [Install]
 WantedBy=multi-user.target
 
+
 Then run:
 
-sudo systemctl enable skinet-web.service
-sudo systemctl start skinet-web.service
+systemctl daemon-reload
+
+-- sudo systemctl start ecuanto-web.service
+
+sudo systemctl restart ecuanto-web.service
 
 15.  Ensure the server is running:
+
+(install net tools with:  apt install net-tools)
 
 netstat -ntpl
 
 16.  Check the journal logs:
 
-journalctl -u skinet-web.service
-journalctl -u skinet-web.service | tail -n 300
-journalctl -u skinet-web.service --since "5 min ago"
+journalctl -u ecuanto-web.service
+journalctl -u ecuanto-web.service | tail -n 300
+journalctl -u ecuanto-web.service --since "5 min ago"
 
 
 ===== 
 certificate
 =====
+sudo certbot --apache -d ecuanto.com  -d www.ecuanto.com
+sudo certbot --apache -d www.ecuanto.com
 
 Demo the Program.cs so URL is different
 Demo the config in Apache:
 
-sudo nano /etc/apache2/sites-available/skinet.conf
-sudo nano /etc/systemd/system/skinet-web.service
+sudo nano /etc/apache2/sites-available/ecuanto.conf
+sudo nano /etc/systemd/system/ecuanto-web.service
 
-sudo systemctl restart skinet-web.service
+systemctl daemon-reload
+sudo systemctl restart ecuanto-web.service
 
-redis-cli --scan --pattern '*product*' | xargs -L 100 redis-cli del
+redis-cli --scan --pattern '*product*' | xargs -L 100 redis-cli del "%"
+redis-cli FLUSHALL
 

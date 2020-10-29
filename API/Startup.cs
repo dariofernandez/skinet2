@@ -27,26 +27,30 @@ namespace API
         {
             // lifetime is scoped (for the request)
             services.AddDbContext<StoreContext>(x =>
-            x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+                x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+                //x.UseMySql(_config.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<AppIdentityDbContext>(x =>
             {
                 x.UseSqlServer(_config.GetConnectionString("IdentityConnection"));
+                //x.UseMySql(_config.GetConnectionString("IdentityConnection"));
+
             });
 
             ConfigureServices(services);
         }
 
 
-        public void ConfigureProductionServices(IServiceCollection services)  // convention based
+        public void ConfigureProductionServices(IServiceCollection services)
         {
-            // lifetime is scoped (for the request)
             services.AddDbContext<StoreContext>(x =>
             x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+            //x.UseMySql(_config.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<AppIdentityDbContext>(x =>
             {
                 x.UseSqlServer(_config.GetConnectionString("IdentityConnection"));
+                //x.UseMySql(_config.GetConnectionString("IdentityConnection"));
             });
 
             ConfigureServices(services);
@@ -56,7 +60,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //some content moved to ApplicationServicesExtensions class
+            //OJO:  some content moved to Extensions.ApplicationServicesExtensions class
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
 
@@ -79,6 +83,7 @@ namespace API
             });
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -91,6 +96,7 @@ namespace API
             app.UseMiddleware<ExceptionMiddleware>();
 
             //by DF 51. for error handling
+            // when a request is passed to the API server but we don't have an endpoint, it will redirect to our ErrorController
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
@@ -99,14 +105,18 @@ namespace API
 
             app.UseStaticFiles();
 
-            // this is for getting the images from the Contenet folder
+            // this is for getting the images from the Content folder
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Content") 
-                ),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Content")),
                 RequestPath = "/content"
             });
+
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Content")),
+            //    RequestPath = "/content"
+            //});
 
             app.UseCors("CorsPolicy");
 

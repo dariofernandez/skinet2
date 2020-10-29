@@ -13,7 +13,7 @@ namespace API.Extensions
 
         public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
-            // test https://localhost:44315/swagger/index.html
+            // test https://localhost:5101/swagger/index.html
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SkiNet API", Version = "v1" });
@@ -24,7 +24,7 @@ namespace API.Extensions
 
         public static IApplicationBuilder UseSwaggerDocumentation ( this IApplicationBuilder app)
         {
-            //  https://localhost:44315/swagger/index.html
+            //  https://localhost:5101/swagger/index.html
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

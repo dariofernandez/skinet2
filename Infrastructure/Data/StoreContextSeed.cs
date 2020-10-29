@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Entities.OrderAggregate;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data
@@ -19,8 +20,12 @@ namespace Infrastructure.Data
             {
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
+                
+
                 if (!context.ProductBrands.Any())
                 {
+                    //Cannot insert explicit value for identity column in table
+ 
                     var brandsData =
                         File.ReadAllText(path + @"/Data/SeedData/brands.json");
 

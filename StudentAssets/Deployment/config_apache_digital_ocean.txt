@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+ProxyPreserveHost On
+ProxyPass / http://127.0.0.1:5100/
+ProxyPassReverse / http://127.0.0.1:5100/
+
+ErrorLog /var/log/apache2/nisqs-error.log
+CustomLog /var/log/apache2/nisqs-access.log common
